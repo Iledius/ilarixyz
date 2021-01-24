@@ -1,17 +1,48 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <h1>Test counter</h1>
+    <p>count: {{ capacity }}</p>
+    <p>test {{}}</p>
+    <button @click="increaseCapacity()">Increase Capacity</button>
+    <button @click="increaseCapacity()">Reset</button>
+  </div>
+  
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+//import { MenuBox } from "./components/MenuBox";
+//import { Button } from "./components/Button";
+import { ref } from "vue";
+function setCookie(value) {
+  document.cookie = `count=${value}; Path=/;`;
+}
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return Number(parts.pop().split(";").shift());
+}
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+
+  data() {
+    return {};
+  },
+
+  methods: {
+
+  },
+
+  setup() {
+    const capacity = ref(0 + getCookie("count"));
+    function increaseCapacity() {
+      capacity.value++;
+      setCookie(capacity.value);
+    }
+    return { capacity, increaseCapacity };
+  },
+};
 </script>
 
 <style>
